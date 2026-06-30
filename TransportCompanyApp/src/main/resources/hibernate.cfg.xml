@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- JDBC connection settings -->
+        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="connection.url">jdbc:sqlserver://localhost:1433;databaseName=TransportCompanyDB;encrypt=true;trustServerCertificate=true</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
+
+        <!-- Echo SQL to stdout (полезно за дебъг, после може да се изключи) -->
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+        <!-- Schema management -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Connection pool (default, само за dev) -->
+        <property name="connection.pool_size">5</property>
+
+        <!-- Mapped entities -->
+        <mapping class="org.transport.entity.TransportCompany"/>
+        <mapping class="org.transport.entity.Client"/>
+        <mapping class="org.transport.entity.Employee"/>
+        <mapping class="org.transport.entity.Driver"/>
+        <mapping class="org.transport.entity.Vehicle"/>
+        <mapping class="org.transport.entity.Bus"/>
+        <mapping class="org.transport.entity.Truck"/>
+        <mapping class="org.transport.entity.Tanker"/>
+        <mapping class="org.transport.entity.Transport"/>
+
+    </session-factory>
+</hibernate-configuration>

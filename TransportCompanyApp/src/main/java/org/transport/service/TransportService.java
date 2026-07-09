@@ -42,6 +42,11 @@ public class TransportService {
         TransactionUtil.execute(sessionFactory, session -> transportDAO.deleteById(session, id));
     }
 
+    public List<Transport> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            return transportDAO.findAll(session);
+        }
+    }
     public Transport getById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return transportDAO.findById(session, id);

@@ -40,4 +40,13 @@ public class EmployeeDAOImpl extends AbstractGenericDAO<Employee, Long> implemen
                 .setParameter("id", id)
                 .uniqueResult();
     }
+
+    @Override
+    public List<DriverQualification> findQualifications(Session session, Long driverId) {
+        return session.createQuery(
+                        "SELECT q FROM Driver d JOIN d.qualifications q WHERE d.id = :id",
+                        DriverQualification.class)
+                .setParameter("id", driverId)
+                .list();
+    }
 }

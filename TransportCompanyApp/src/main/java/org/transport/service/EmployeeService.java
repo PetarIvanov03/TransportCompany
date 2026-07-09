@@ -53,4 +53,10 @@ public class EmployeeService {
             return employeeDAO.findByIdWithCompany(session, id);
         }
     }
+
+    public List<DriverQualification> getQualifications(Long driverId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return employeeDAO.findQualifications(session, driverId);
+        }
+    }
 }

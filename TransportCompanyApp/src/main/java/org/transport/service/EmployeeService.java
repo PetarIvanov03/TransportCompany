@@ -1,16 +1,15 @@
 package org.transport.service;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.transport.dao.EmployeeDAO;
 import org.transport.dao.impl.EmployeeDAOImpl;
 import org.transport.entity.Employee;
 import org.transport.entity.enums.DriverQualification;
 import org.transport.util.HibernateUtil;
+import org.transport.util.TransactionUtil;
 import org.transport.util.ValidationUtil;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 // Business logic for managing employees and drivers
 public class EmployeeService {
@@ -19,16 +18,16 @@ public class EmployeeService {
 
     public void createEmployee(Employee employee) {
         ValidationUtil.validate(employee);
-        executeInTransaction(session -> employeeDAO.save(session, employee));
+        TransactionUtil.execute(HibernateUtil.getSessionFactory(), session -> employeeDAO.save(session, employee));
     }
 
     public void updateEmployee(Employee employee) {
         ValidationUtil.validate(employee);
-        executeInTransaction(session -> employeeDAO.update(session, employee));
+        TransactionUtil.execute(HibernateUtil.getSessionFactory(), session -> employeeDAO.update(session, employee));
     }
 
     public void deleteEmployee(Long id) {
-        executeInTransaction(session -> employeeDAO.deleteById(session, id));
+        TransactionUtil.execute(HibernateUtil.getSessionFactory(), session -> employeeDAO.deleteById(session, id));
     }
 
     public Employee getById(Long id) {
@@ -49,16 +48,9 @@ public class EmployeeService {
         }
     }
 
-    private void executeInTransaction(Consumer<Session> action) {
+    public Employee getByIdWithCompany(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction tx = session.beginTransaction();
-            try {
-                action.accept(session);
-                tx.commit();
-            } catch (Exception e) {
-                tx.rollback();
-                throw e;
-            }
+            return employeeDAO.findByIdWithCompany(session, id);
         }
     }
 }

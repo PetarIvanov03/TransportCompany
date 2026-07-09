@@ -30,4 +30,14 @@ public class EmployeeDAOImpl extends AbstractGenericDAO<Employee, Long> implemen
                 .setParameter("qualification", qualification)
                 .list();
     }
+
+    @Override
+    public Employee findByIdWithCompany(Session session, Long id) {
+        return session.createQuery(
+                        "SELECT e FROM Employee e " +
+                                "LEFT JOIN FETCH e.company " +
+                                "WHERE e.id = :id", Employee.class)
+                .setParameter("id", id)
+                .uniqueResult();
+    }
 }

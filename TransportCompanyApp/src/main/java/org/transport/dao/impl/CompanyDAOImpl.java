@@ -30,4 +30,24 @@ public class CompanyDAOImpl extends AbstractGenericDAO<TransportCompany, Long> i
                                 "ORDER BY SUM(COALESCE(t.price, 0)) DESC", TransportCompany.class)
                 .list();
     }
+
+    @Override
+    public TransportCompany findByIdWithVehicles(Session session, Long id) {
+        return session.createQuery(
+                        "SELECT c FROM TransportCompany c " +
+                                "LEFT JOIN FETCH c.vehicles " +
+                                "WHERE c.id = :id", TransportCompany.class)
+                .setParameter("id", id)
+                .uniqueResult();
+    }
+
+    @Override
+    public TransportCompany findByIdWithEmployees(Session session, Long id) {
+        return session.createQuery(
+                        "SELECT c FROM TransportCompany c " +
+                                "LEFT JOIN FETCH c.employees " +
+                                "WHERE c.id = :id", TransportCompany.class)
+                .setParameter("id", id)
+                .uniqueResult();
+    }
 }

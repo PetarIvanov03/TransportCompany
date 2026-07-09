@@ -4,8 +4,6 @@ import org.hibernate.Session;
 import org.transport.dao.ClientDAO;
 import org.transport.entity.Client;
 
-import java.util.List;
-
 // Hibernate implementation of ClientDAO
 public class ClientDAOImpl extends AbstractGenericDAO<Client, Long> implements ClientDAO {
 

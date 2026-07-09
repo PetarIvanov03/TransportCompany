@@ -30,4 +30,16 @@ public class TransportDAOImpl extends AbstractGenericDAO<Transport, Long> implem
                 .setParameter("to", to)
                 .list();
     }
+
+    @Override
+    public Transport findByIdWithDetails(Session session, Long id) {
+        return session.createQuery(
+                        "SELECT t FROM Transport t " +
+                                "LEFT JOIN FETCH t.client " +
+                                "LEFT JOIN FETCH t.vehicle " +
+                                "LEFT JOIN FETCH t.driver " +
+                                "WHERE t.id = :id", Transport.class)
+                .setParameter("id", id)
+                .uniqueResult();
+    }
 }

@@ -10,4 +10,5 @@ import java.util.List;
 public interface EmployeeDAO extends GenericDAO<org.transport.entity.Employee, Long> {
     List<Employee> findAllSortedBySalary(Session session);
     List<Employee> findDriversByQualification(Session session, DriverQualification qualification);
+    Employee findByIdWithCompany(Session session, Long id);
 }

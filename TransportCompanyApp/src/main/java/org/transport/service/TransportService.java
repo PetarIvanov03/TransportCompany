@@ -2,17 +2,16 @@ package org.transport.service;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.transport.dao.TransportDAO;
 import org.transport.dao.impl.TransportDAOImpl;
 import org.transport.entity.Transport;
 import org.transport.entity.enums.CargoType;
 import org.transport.util.HibernateUtil;
+import org.transport.util.TransactionUtil;
 import org.transport.util.ValidationUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Consumer;
 
 // Business logic for creating and managing transport orders
 public class TransportService {
@@ -31,32 +30,38 @@ public class TransportService {
 
     public void createTransport(Transport transport) {
         validateTransport(transport);
-        executeInTransaction(session -> transportDAO.save(session, transport));
+        TransactionUtil.execute(sessionFactory, session -> transportDAO.save(session, transport));
     }
 
     public void updateTransport(Transport transport) {
         validateTransport(transport);
-        executeInTransaction(session -> transportDAO.update(session, transport));
+        TransactionUtil.execute(sessionFactory, session -> transportDAO.update(session, transport));
     }
 
     public void deleteTransport(Long id) {
-        executeInTransaction(session -> transportDAO.deleteById(session, id));
+        TransactionUtil.execute(sessionFactory, session -> transportDAO.deleteById(session, id));
     }
 
     public Transport getById(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return transportDAO.findById(session, id);
         }
     }
 
+    public Transport getByIdWithDetails(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return transportDAO.findByIdWithDetails(session, id);
+        }
+    }
+
     public List<Transport> getByDestination(String destination) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return transportDAO.findByDestination(session, destination);
         }
     }
 
     public List<Transport> getByDateRange(LocalDateTime from, LocalDateTime to) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return transportDAO.findByDateRange(session, from, to);
         }
     }
@@ -75,19 +80,6 @@ public class TransportService {
         if (!transport.getArrivalDate().isAfter(transport.getDepartureDate())) {
             throw new IllegalArgumentException(
                     "Датата на пристигане трябва да е след датата на тръгване.");
-        }
-    }
-
-    private void executeInTransaction(Consumer<Session> action) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction tx = session.beginTransaction();
-            try {
-                action.accept(session);
-                tx.commit();
-            } catch (Exception e) {
-                tx.rollback();
-                throw e;
-            }
         }
     }
 }

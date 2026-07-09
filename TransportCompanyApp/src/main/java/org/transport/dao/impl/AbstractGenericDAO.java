@@ -5,7 +5,7 @@ import org.transport.dao.GenericDAO;
 
 import java.util.List;
 
-public class AbstractGenericDAO<T, ID> implements GenericDAO<T, ID> {
+public abstract class AbstractGenericDAO<T, ID> implements GenericDAO<T, ID> {
 
     private final Class<T> entityClass;
 

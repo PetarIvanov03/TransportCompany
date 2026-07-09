@@ -10,4 +10,5 @@ import java.util.List;
 public interface TransportDAO extends GenericDAO<org.transport.entity.Transport, Long> {
     List<Transport> findByDestination(Session session, String destination);
     List<Transport> findByDateRange(Session session, LocalDateTime from, LocalDateTime to);
+    Transport findByIdWithDetails(Session session, Long id);
 }

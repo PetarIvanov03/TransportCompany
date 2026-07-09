@@ -1,19 +1,9 @@
 package org.transport.service;
 
-import org.hibernate.Session;
-import org.transport.entity.Client;
-import org.transport.entity.Driver;
 import org.transport.entity.Transport;
-import org.transport.entity.Vehicle;
-import org.transport.entity.enums.CargoType;
-import org.transport.entity.enums.PaymentStatus;
-import org.transport.util.HibernateUtil;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 // Handles serialisation of entities and reports to files (text, CSV, etc.)

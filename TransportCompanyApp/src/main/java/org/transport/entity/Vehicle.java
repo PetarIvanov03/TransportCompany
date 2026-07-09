@@ -32,7 +32,7 @@ public abstract class Vehicle {
     private Long id;
 
     @NotBlank
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String registrationNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -22,6 +22,7 @@ public class TransportCompany {
     private Long id;
 
     @NotBlank
+    @Column(nullable = false)
     private String name;
 
     private String address;

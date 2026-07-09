@@ -1,5 +1,11 @@
 package org.transport.dao;
 
-// Data-access contract for TransportCompany entities
-public interface CompanyDAO extends GenericDAO<org.transport.entity.TransportCompany, Long> {
+import org.hibernate.Session;
+import org.transport.entity.TransportCompany;
+
+import java.util.List;
+
+public interface CompanyDAO extends GenericDAO<TransportCompany, Long> {
+    List<TransportCompany> findAllSortedByName(Session session);
+    List<TransportCompany> findAllSortedByRevenue(Session session);
 }

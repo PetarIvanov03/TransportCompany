@@ -1,5 +1,28 @@
 package org.transport.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.transport.entity.enums.TankerCargoType;
+
+import java.math.BigDecimal;
+
 // Represents a tanker vehicle used for liquid or bulk cargo transport
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Tanker extends Vehicle {
+
+    @Positive
+    private BigDecimal capacityLiters;
+
+    @Enumerated(EnumType.STRING)
+    private TankerCargoType permittedCargoType;
 }

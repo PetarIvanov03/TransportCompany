@@ -1,5 +1,8 @@
 package org.transport.dao;
 
-// Data-access contract for Client entities
-public interface ClientDAO extends GenericDAO<org.transport.entity.Client, Long> {
+import org.hibernate.Session;
+import org.transport.entity.Client;
+
+public interface ClientDAO extends GenericDAO<Client, Long> {
+    Client findByName(Session session, String name);
 }

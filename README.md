@@ -38,6 +38,8 @@ entity → dao → service → ui
 
 Session/transaction management lives at the service layer: read operations open a short-lived session, while writes go through `TransactionUtil.execute`, which commits on success and rolls back on any exception.
 
+`hbm2ddl.auto=update` is used deliberately to keep schema management simple for this project's scope; it auto-creates/updates tables on startup instead of relying on migration scripts.
+
 ## Setup
 
 1. **Clone the repository**
@@ -67,7 +69,9 @@ Session/transaction management lives at the service layer: read operations open 
 
 4. **Run**
 
-   The console UI entry point is `org.transport.ui.ConsoleApp` (run it from your IDE, or on the classpath produced by Maven). There's also `org.transport.Main`, a minimal entry point that just verifies the DB connection and schema sync.
+   Run `org.transport.ui.ConsoleApp` — this is the application's entry point and launches the interactive console menu (from your IDE, or on the classpath produced by Maven).
+
+   `org.transport.Main` is a separate, minimal utility that only verifies the DB connection and schema sync; it does not launch the UI.
 
 ## Tests
 
@@ -80,3 +84,7 @@ Unit tests (`TransportServiceTest`, `ValidationUtilTest`) use Mockito to isolate
 ## Data Model
 
 Core entities: `TransportCompany`, `Client`, `Employee` (with `Driver` as a subtype holding qualifications), `Vehicle` (abstract, with `Bus`, `Truck`, `Tanker` subtypes), and `Transport`, which links a `Client`, `Vehicle`, and `Driver` for a single trip.
+
+---
+
+*Developed as a course project for CSCB525.*

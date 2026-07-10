@@ -44,7 +44,6 @@ class TransportServiceTest {
     void setUp() {
         transportService = new TransportService(transportDAO, sessionFactory);
 
-        // за тестовете, които РЕАЛНО стигат до executeInTransaction (само validData теста)
         lenient().when(sessionFactory.openSession()).thenReturn(session);
         lenient().when(session.beginTransaction()).thenReturn(transaction);
 

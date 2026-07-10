@@ -10,7 +10,7 @@ class ValidationUtilTest {
     @Test
     void validate_blankName_throwsException() {
         Client client = new Client();
-        client.setName(""); // @NotBlank би трябвало да гръмне тук
+        client.setName("");
 
         assertThrows(IllegalArgumentException.class,
                 () -> ValidationUtil.validate(client));

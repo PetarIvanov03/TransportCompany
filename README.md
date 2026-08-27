@@ -2,6 +2,7 @@
 
 Console-based Java/Hibernate application for managing a transport company's clients, employees, vehicle fleet, and transport orders against a relational database.
 
+![Build](https://github.com/PetarIvanov03/TransportCompany/actions/workflows/build.yml/badge.svg)
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![Hibernate](https://img.shields.io/badge/Hibernate_ORM-6.4.4.Final-59666C)
 ![Maven](https://img.shields.io/badge/Build-Maven-C71A36)
